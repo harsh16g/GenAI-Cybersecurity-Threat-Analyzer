@@ -18,6 +18,27 @@ An AI-powered cybersecurity log analysis system that detects common cyber threat
 
 ---
 
+---
+
+## 🖼 Project Demo
+
+### 🔹 1. Web UI Homepage
+![UI Home](screenshots/ui_home.png)
+
+### 🔹 2. Uploading Log File
+![File Selected](screenshots/file_selected.png)
+
+### 🔹 3. Detected Threats
+![Threats](screenshots/ui_threats.png)
+
+### 🔹 4. AI-Generated Incident Summary
+![AI Summary](screenshots/ai_summary.png)
+
+### 🔹 5. SIEM-Compatible CSV Output
+![CSV Output](screenshots/csv_output.png)
+
+---
+
 ## 🛠 Tech Stack
 
 - Python
