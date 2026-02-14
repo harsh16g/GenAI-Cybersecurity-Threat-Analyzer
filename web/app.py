@@ -2,7 +2,11 @@ import os
 import subprocess
 from flask import Flask, render_template, request, send_file
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder="templates",
+    static_folder="static"
+)
 
 # Get base project directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
