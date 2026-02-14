@@ -1,0 +1,4 @@
+Attack_Type,IP,Count/Keyword,Time_Window/Time,Severity
+Brute Force Attack,192.168.1.5,3,64s,MEDIUM
+SQL Injection,10.0.0.3,UNION SELECT,2026-02-13 10:02:10,HIGH
+Admin Access,172.16.0.9,2,40s,MEDIUM
