@@ -1,5 +1,5 @@
 flask
 groq
-pyhton-dotenv
+python-dotenv
 matplotlib
 gunicorn
