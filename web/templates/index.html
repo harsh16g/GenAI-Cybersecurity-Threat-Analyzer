@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -439,34 +438,56 @@
             </form>
         </div>
 
-        {% if threats or summary %}
-        <div class="results-grid">
-            {% if threats %}
-            <div class="result-card threats">
-                <div class="card-header">
-                    <h3 class="card-title">Detected Threats</h3>
-                    <span class="card-badge badge-danger">Critical</span>
-                </div>
-                <textarea readonly>{{ threats }}</textarea>
-            </div>
-            {% endif %}
+        {% if threats %}
+<div class="card">
+    <h2>Threat Statistics</h2>
+    <img src="/threat-chart" style="width:100%; max-width:700px;">
+</div>
+{% endif %}
 
-            {% if summary %}
-            <div class="result-card summary">
-                <div class="card-header">
-                    <h3 class="card-title">AI Analysis Summary</h3>
-                    <span class="card-badge badge-info">Generated</span>
-                </div>
-                <textarea readonly>{{ summary }}</textarea>
-            </div>
-            {% endif %}
+{% if threats or summary %}
+<div class="results-grid">
+    {% if threats %}
+    <div class="result-card threats">
+        <div class="card-header">
+            <h3 class="card-title">Detected Threats</h3>
+            <span class="card-badge badge-danger">Critical</span>
         </div>
-        {% else %}
-        <div class="empty-state">
-            <div class="empty-state-icon">⚠</div>
-            <p class="empty-state-text">No Analysis Results Yet</p>
+        <textarea readonly>{{ threats }}</textarea>
+
+        <!-- Download CSV Button -->
+        <div style="margin-top: 15px;">
+            <a href="/download-csv">
+                <button class="btn">Download CSV Report</button>
+            </a>
         </div>
-        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if summary %}
+    <div class="result-card summary">
+        <div class="card-header">
+            <h3 class="card-title">AI Analysis Summary</h3>
+            <span class="card-badge badge-info">Generated</span>
+        </div>
+        <textarea readonly>{{ summary }}</textarea>
+
+        <!-- Download Summary Button -->
+        <div style="margin-top: 15px;">
+            <a href="/download-summary">
+                <button class="btn">Download AI Summary</button>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="empty-state-icon">⚠</div>
+    <p class="empty-state-text">No Analysis Results Yet</p>
+</div>
+{% endif %}
+
 
         <footer>
             <p>Cybersecurity Mini Project | GenAI Threat Detection System</p>

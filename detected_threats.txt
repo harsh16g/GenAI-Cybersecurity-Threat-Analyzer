@@ -1,6 +1,18 @@
-DETECTED CYBERSECURITY THREATS (TIME-BASED)
-=============================================
+DETECTED CYBERSECURITY THREATS
+========================================
 
-Brute Force Attack | IP: 192.168.1.5 | Attempts: 3 | Time Window: 64s | Severity: MEDIUM
-SQL Injection Attempt | IP: 10.0.0.3 | Time: 2026-02-13 10:02:10 | Keyword: UNION SELECT | Severity: HIGH
-Suspicious Admin Access | IP: 172.16.0.9 | Attempts: 2 | Time Window: 40s | Severity: MEDIUM
+Attack Type: Brute Force
+IP Address: 192.168.1.5
+Details: 3
+Severity: HIGH
+------------------------------
+Attack Type: SQL Injection
+IP Address: 10.0.0.3
+Details: UNION SELECT
+Severity: HIGH
+------------------------------
+Attack Type: Suspicious Admin Access
+IP Address: 172.16.0.9
+Details: 2
+Severity: MEDIUM
+------------------------------

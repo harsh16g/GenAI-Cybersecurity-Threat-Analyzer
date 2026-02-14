@@ -1,0 +1,4 @@
+flask
+groq
+pyhton-dotenv
+matplotlib

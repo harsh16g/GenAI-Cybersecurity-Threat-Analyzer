@@ -1,119 +1,122 @@
 import re
+import os
 import csv
-from datetime import datetime
 from collections import defaultdict
+import matplotlib.pyplot as plt
 
-log_file_path = "logs/sample_logs.txt"
-text_output_path = "detected_threats.txt"
-csv_output_path = "detected_threats.csv"
+# Paths
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+LOG_FILE = os.path.join(BASE_DIR, "logs", "sample_logs.txt")
+THREAT_REPORT = os.path.join(BASE_DIR, "detected_threats.txt")
+CSV_REPORT = os.path.join(BASE_DIR, "detected_threats.csv")
+CHART_FILE = os.path.join(BASE_DIR, "threat_chart.png")
 
-# -------------------------------
-# Read Logs
-# -------------------------------
-with open(log_file_path, "r") as file:
+# Threat Counters
+brute_force_total = 0
+sql_total = 0
+admin_total = 0
+
+# Storage
+failed_login_count = defaultdict(int)
+admin_access_count = defaultdict(int)
+detected_rows = []
+
+# Read logs
+with open(LOG_FILE, "r") as file:
     logs = file.readlines()
 
-threats_text = []
-threats_csv = []
-
 # -------------------------------
-# Helpers
+# Brute Force Detection
 # -------------------------------
-def extract_timestamp(line):
-    try:
-        return datetime.strptime(line[:19], "%Y-%m-%d %H:%M:%S")
-    except:
-        return None
-
-def extract_ip(line):
-    match = re.search(r"\d+\.\d+\.\d+\.\d+", line)
-    return match.group() if match else None
-
-# -------------------------------
-# Brute Force Detection (Time-based)
-# Rule: ≥3 failed logins within 2 minutes
-# -------------------------------
-failed_logins = defaultdict(list)
-
 for line in logs:
     if "Failed login" in line:
-        ip = extract_ip(line)
-        ts = extract_timestamp(line)
-        if ip and ts:
-            failed_logins[ip].append(ts)
+        ip_match = re.search(r"\d+\.\d+\.\d+\.\d+", line)
+        if ip_match:
+            ip = ip_match.group()
+            failed_login_count[ip] += 1
 
-for ip, timestamps in failed_logins.items():
-    timestamps.sort()
-    if len(timestamps) >= 3:
-        time_diff = (timestamps[-1] - timestamps[0]).seconds
-        if time_diff <= 120:  # 2 minutes
-            severity = "HIGH" if len(timestamps) >= 5 else "MEDIUM"
-            threats_text.append(
-                f"Brute Force Attack | IP: {ip} | Attempts: {len(timestamps)} | Time Window: {time_diff}s | Severity: {severity}"
-            )
-            threats_csv.append(
-                ["Brute Force Attack", ip, len(timestamps), f"{time_diff}s", severity]
-            )
+for ip, count in failed_login_count.items():
+    if count >= 3:
+        brute_force_total += 1
+        detected_rows.append(
+            ["Brute Force", ip, count, "HIGH"]
+        )
 
 # -------------------------------
 # SQL Injection Detection
 # -------------------------------
-sql_keywords = ["UNION SELECT", "OR 1=1", "DROP TABLE"]
+sql_keywords = [
+    "UNION SELECT",
+    "OR 1=1",
+    "DROP TABLE"
+]
 
 for line in logs:
     for keyword in sql_keywords:
         if keyword.lower() in line.lower():
-            ip = extract_ip(line)
-            ts = extract_timestamp(line)
-            threats_text.append(
-                f"SQL Injection Attempt | IP: {ip} | Time: {ts} | Keyword: {keyword} | Severity: HIGH"
-            )
-            threats_csv.append(
-                ["SQL Injection", ip, keyword, ts, "HIGH"]
+            ip_match = re.search(r"\d+\.\d+\.\d+\.\d+", line)
+            ip = ip_match.group() if ip_match else "Unknown"
+
+            sql_total += 1
+            detected_rows.append(
+                ["SQL Injection", ip, keyword, "HIGH"]
             )
 
 # -------------------------------
-# Admin Access Detection (Time-based)
-# Rule: ≥2 accesses within 1 minute
+# Suspicious Admin Access Detection
 # -------------------------------
-admin_access = defaultdict(list)
-
 for line in logs:
     if "/admin" in line:
-        ip = extract_ip(line)
-        ts = extract_timestamp(line)
-        if ip and ts:
-            admin_access[ip].append(ts)
+        ip_match = re.search(r"\d+\.\d+\.\d+\.\d+", line)
+        if ip_match:
+            ip = ip_match.group()
+            admin_access_count[ip] += 1
 
-for ip, timestamps in admin_access.items():
-    timestamps.sort()
-    if len(timestamps) >= 2:
-        time_diff = (timestamps[-1] - timestamps[0]).seconds
-        if time_diff <= 60:
-            severity = "HIGH" if len(timestamps) >= 4 else "MEDIUM"
-            threats_text.append(
-                f"Suspicious Admin Access | IP: {ip} | Attempts: {len(timestamps)} | Time Window: {time_diff}s | Severity: {severity}"
-            )
-            threats_csv.append(
-                ["Admin Access", ip, len(timestamps), f"{time_diff}s", severity]
-            )
+for ip, count in admin_access_count.items():
+    if count >= 2:
+        admin_total += 1
+        detected_rows.append(
+            ["Suspicious Admin Access", ip, count, "MEDIUM"]
+        )
 
 # -------------------------------
-# Write Text Output
+# Write Text Threat Report
 # -------------------------------
-with open(text_output_path, "w") as file:
-    file.write("DETECTED CYBERSECURITY THREATS (TIME-BASED)\n")
-    file.write("=" * 45 + "\n\n")
-    for t in threats_text:
-        file.write(t + "\n")
+with open(THREAT_REPORT, "w") as report:
+    report.write("DETECTED CYBERSECURITY THREATS\n")
+    report.write("=" * 40 + "\n\n")
+
+    for row in detected_rows:
+        report.write(f"Attack Type: {row[0]}\n")
+        report.write(f"IP Address: {row[1]}\n")
+        report.write(f"Details: {row[2]}\n")
+        report.write(f"Severity: {row[3]}\n")
+        report.write("-" * 30 + "\n")
+
+print("Threat analysis completed successfully.")
 
 # -------------------------------
-# Write CSV Output
+# Write CSV Report
 # -------------------------------
-with open(csv_output_path, "w", newline="") as csv_file:
-    writer = csv.writer(csv_file)
-    writer.writerow(["Attack_Type", "IP", "Count/Keyword", "Time_Window/Time", "Severity"])
-    for row in threats_csv:
-        writer.writerow(row)
+with open(CSV_REPORT, "w", newline="") as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(["Attack Type", "IP Address", "Details", "Severity"])
+    writer.writerows(detected_rows)
 
-print("Threat analysis with timestamps completed successfully.")
+print("CSV report generated.")
+
+# -------------------------------
+# Generate Threat Statistics Chart
+# -------------------------------
+labels = ["Brute Force", "SQL Injection", "Admin Access"]
+values = [brute_force_total, sql_total, admin_total]
+
+plt.figure()
+plt.bar(labels, values)
+plt.xlabel("Threat Type")
+plt.ylabel("Count")
+plt.title("Threat Statistics")
+plt.savefig(CHART_FILE)
+plt.close()
+
+print("Threat statistics chart generated.")
