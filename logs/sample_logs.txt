@@ -1,8 +1,15 @@
-2026-02-13 10:00:01 Failed login from IP 192.168.1.5
-2026-02-13 10:00:15 Failed login from IP 192.168.1.5
-2026-02-13 10:01:05 Failed login from IP 192.168.1.5
+[2026-04-09 10:01:12] INFO Login attempt failed for user admin from 192.168.1.5
+[2026-04-09 10:01:15] INFO Login attempt failed for user admin from 192.168.1.5
+[2026-04-09 10:01:18] INFO Login attempt failed for user admin from 192.168.1.5
+[2026-04-09 10:01:20] INFO Login attempt failed for user admin from 192.168.1.5
+[2026-04-09 10:01:25] INFO Login attempt failed for user admin from 192.168.1.5
 
-2026-02-13 10:02:10 SQL keyword detected: UNION SELECT from IP 10.0.0.3
+[2026-04-09 10:02:10] WARNING Suspicious query detected: ' OR 1=1 --
+[2026-04-09 10:02:15] WARNING Suspicious query detected: UNION SELECT username, password FROM users
 
-2026-02-13 10:05:00 Access to /admin from IP 172.16.0.9
-2026-02-13 10:05:40 Access to /admin from IP 172.16.0.9
+[2026-04-09 10:03:05] CRITICAL Unauthorized admin panel access from IP 10.0.0.8
+
+[2026-04-09 10:04:10] INFO Login attempt failed for user root from 172.16.0.2
+[2026-04-09 10:04:15] INFO Login attempt failed for user root from 172.16.0.2
+
+[2026-04-09 10:05:22] WARNING Suspicious query detected: DROP TABLE users
