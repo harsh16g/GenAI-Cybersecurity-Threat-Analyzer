@@ -1,4 +1,12 @@
 import os
+
+print("STARTING AI SUMMARY")
+
+if not os.path.exists("detected_threats.txt"):
+    raise Exception("detected_threats.txt NOT FOUND ❌")
+
+print("File found ✅")
+import os
 from groq import Groq
 from dotenv import load_dotenv
 
