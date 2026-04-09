@@ -1,8 +1,14 @@
-[2026-04-09 09:00:01] INFO Login failed for user admin from 192.168.1.10
-[2026-04-09 09:00:05] INFO Login failed for user admin from 192.168.1.10
-[2026-04-09 09:00:10] INFO Login failed for user root from 192.168.1.11
+Attack Type: Brute Force
+IP Address: 192.168.1.5
+Details: 3
+Severity: HIGH
 
-[2026-04-09 09:01:00] WARNING Suspicious database query detected
-[2026-04-09 09:01:05] WARNING Abnormal query pattern detected
+Attack Type: SQL Injection
+IP Address: 10.0.0.3
+Details: suspicious query
+Severity: HIGH
 
-[2026-04-09 09:02:00] CRITICAL Unauthorized admin access attempt from IP 10.0.0.5
+Attack Type: Admin Access
+IP Address: 172.16.0.2
+Details: unauthorized access
+Severity: CRITICAL
