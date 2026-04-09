@@ -44,7 +44,6 @@ def index():
             # Run AI summary generator
             subprocess.run(
                 ["python", "ai_summary.py"],
-                cwd=BASE_DIR,
                 check=True
             )
 
