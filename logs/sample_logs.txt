@@ -1,14 +1,14 @@
-Attack Type: Brute Force
-IP Address: 192.168.1.5
-Details: 3
-Severity: HIGH
-
-Attack Type: SQL Injection
-IP Address: 10.0.0.3
-Details: suspicious query
-Severity: HIGH
-
-Attack Type: Admin Access
-IP Address: 172.16.0.2
-Details: unauthorized access
-Severity: CRITICAL
+[2026-04-09 08:12:05] INFO Failed login attempt from 192.168.1.5 for user admin
+[2026-04-09 08:12:18] INFO Failed login attempt from 192.168.1.5 for user admin
+[2026-04-09 08:12:33] INFO Failed login attempt from 192.168.1.5 for user admin
+[2026-04-09 08:13:01] INFO User johndoe successfully authenticated from 192.168.1.10
+[2026-04-09 09:15:22] WARN Detected suspicious query from 10.0.0.3: SELECT * FROM users WHERE username = 'admin' OR 1=1
+[2026-04-09 09:16:07] WARN Detected suspicious query from 10.0.3.15: UNION SELECT password FROM secrets
+[2026-04-09 09:16:30] WARN Regular search request from 10.0.0.4: SELECT * FROM products WHERE id = 123
+[2026-04-09 10:05:40] INFO GET /admin/dashboard from 172.16.0.2
+[2026-04-09 10:06:02] INFO POST /admin/settings from 172.16.0.2
+[2026-04-09 10:07:10] INFO GET /home from 172.16.0.3
+[2026-04-09 10:08:15] WARN Possible SQL attempt from 10.0.0.3: DROP TABLE users; --
+[2026-04-09 11:00:22] INFO Failed login attempt from 192.168.1.6 for user guest
+[2026-04-09 11:00:45] INFO Failed login attempt from 192.168.1.6 for user guest
+[2026-04-09 11:01:03] INFO User guest successfully authenticated from 192.168.1.6
