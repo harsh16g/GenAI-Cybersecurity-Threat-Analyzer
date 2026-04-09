@@ -1,14 +1,14 @@
-[2026-04-09 10:01:12] INFO Login failed for user admin from 192.168.1.5
-[2026-04-09 10:01:15] INFO Login failed for user admin from 192.168.1.5
-[2026-04-09 10:01:18] INFO Login failed for user admin from 192.168.1.5
-[2026-04-09 10:01:20] INFO Login failed for user admin from 192.168.1.5
-[2026-04-09 10:01:25] INFO Login failed for user admin from 192.168.1.5
+[2026-04-09 10:00:01] Failed login from 192.168.1.10
+[2026-04-09 10:00:02] Failed login from 192.168.1.10
+[2026-04-09 10:00:03] Failed login from 192.168.1.10
 
-[2026-04-09 10:02:10] WARNING Suspicious query detected: OR_1_EQUALS_1
-[2026-04-09 10:02:15] WARNING Suspicious query detected: UNION_SELECT_SIMULATION
-[2026-04-09 10:02:18] WARNING Suspicious query detected: DROP_TABLE_SIMULATION
+[2026-04-09 10:01:01] Failed login from 192.168.1.20
+[2026-04-09 10:01:02] Failed login from 192.168.1.20
+[2026-04-09 10:01:03] Failed login from 192.168.1.20
 
-[2026-04-09 10:03:05] CRITICAL Unauthorized admin access from IP 10.0.0.8
+[2026-04-09 10:02:01] GET /index.php?id=1 OR 1=1 HTTP/1.1 10.0.0.1
+[2026-04-09 10:02:02] GET /search?q=UNION SELECT password FROM users 10.0.0.2
+[2026-04-09 10:02:03] GET /delete?id=5; DROP TABLE users 10.0.0.3
 
-[2026-04-09 10:04:10] INFO Login failed for user root from 172.16.0.2
-[2026-04-09 10:04:15] INFO Login failed for user root from 172.16.0.2
+[2026-04-09 10:03:01] GET /admin HTTP/1.1 172.16.0.5
+[2026-04-09 10:03:02] GET /admin HTTP/1.1 172.16.0.5
